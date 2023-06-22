@@ -20,6 +20,4 @@ public class Triangulo extends Figura{
         return area;
 
     }
-
-
 }

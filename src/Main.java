@@ -1,17 +1,104 @@
-// Press Shift twice to open the Search Everywhere dialog and type `show whitespaces`,
-// then press Enter. You can now see whitespace characters in your code.
+import java.util.Scanner;
+
 public class Main {
     public static void main(String[] args) {
-        // Press Alt+Intro with your caret at the highlighted text to see how
-        // IntelliJ IDEA suggests fixing it.
-        System.out.printf("Hello and welcome!");
+        Scanner sc = new Scanner(System.in);
+        Figura figura = null;
 
-        // Press Mayús+F10 or click the green arrow button in the gutter to run the code.
-        for (int i = 1; i <= 5; i++) {
+        int opcionFigura;
+        do {
+            mostrarMenuFiguras();
+            opcionFigura = sc.nextInt();
+            sc.nextLine();
 
-            // Press Mayús+F9 to start debugging your code. We have set one breakpoint
-            // for you, but you can always add more by pressing Ctrl+F8.
-            System.out.println("i = " + i);
+            switch (opcionFigura) {
+                case 1:
+                    figura = crearTriangulo();
+                    break;
+                case 2:
+                    figura = crearCuadrado();
+                    break;
+                case 3:
+                    figura = crearCirculo();
+                    break;
+                case 4:
+                    System.out.println("Saliendo del programa...");
+                    return;
+                default:
+                    System.out.println("Opción inválida. Intente nuevamente.");
+                    break;
+            }
+
+            if (figura != null) {
+                int opcionCalculo;
+                do {
+                    mostrarMenuCalculo();
+                    opcionCalculo = sc.nextInt();
+                    sc.nextLine();
+
+                    switch (opcionCalculo) {
+                        case 1:
+                            System.out.println("Área: " + figura.calcularArea());
+                            break;
+                        case 2:
+                            System.out.println("Perímetro: " + figura.calcularPerimetro());
+                            break;
+                    }
+                } while (opcionCalculo != 3);
+            }
+        } while (true);
+    }
+
+    public static void mostrarMenuFiguras() {
+        System.out.println("Seleccione una figura:");
+        System.out.println("1. Triángulo");
+        System.out.println("2. Cuadrado");
+        System.out.println("3. Círculo");
+    }
+
+    public static void mostrarMenuCalculo() {
+        System.out.println("Seleccione una opción:");
+        System.out.println("1. Calcular área");
+        System.out.println("2. Calcular perímetro");
+    }
+
+    public static Triangulo crearTriangulo() {
+        Triangulo triangulo = new Triangulo();
+        Scanner sc = new Scanner(System.in);
+
+        for (int i = 0; i < 3; i++) {
+            System.out.println("Ingrese las coordenadas del punto " + (i + 1) + ":");
+            double x = sc.nextDouble();
+            double y = sc.nextDouble();
+            double z = sc.nextDouble();
+            sc.nextLine();
+
+            Punto punto = new Punto(x, y, z);
+            triangulo.listaPuntos.add(punto);
         }
+
+        return triangulo;
+    }
+
+    public static Cuadrado crearCuadrado() {
+        Cuadrado cuadrado = new Cuadrado();
+        Scanner sc = new Scanner(System.in);
+
+        System.out.println("Ingrese el lado del cuadrado:");
+        double lado = sc.nextDouble();
+        cuadrado.l = lado;
+
+        return cuadrado;
+    }
+
+    public static Circulo crearCirculo() {
+        Circulo circulo = new Circulo();
+        Scanner sc = new Scanner(System.in);
+
+        System.out.println("Ingrese el radio del círculo:");
+        double radio = sc.nextDouble();
+        circulo.r = radio;
+
+        return circulo;
     }
 }
